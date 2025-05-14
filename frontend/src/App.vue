@@ -1,10 +1,12 @@
 <template>
-  <div class="container my-5">
-    <h2 class="mb-4">Add Inventory Item</h2>
-    <InventoryForm />
+  <div class="min-h-screen bg-zinc-900 text-white">
+    <Header />
+    <main class="p-4">
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script setup>
-import InventoryForm from './components/InventoryForm.vue'
+import Header from './components/Header.vue'
 </script>

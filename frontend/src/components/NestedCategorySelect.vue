@@ -47,9 +47,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-
-import { watchEffect } from "vue";
+import { ref, watch, watchEffect } from "vue";
 
 const props = defineProps({
   categories: {
@@ -129,7 +127,3 @@ watchEffect(() => {
   emit("update", [...selectionPath.value]);
 });
 </script>
-
-<style scoped>
-</style>
-s
