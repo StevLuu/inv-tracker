@@ -153,18 +153,23 @@ const addTag = (newTag) => {
   }
 };
 
+const normalizeTag = (str) => str.trim().toLowerCase().replace(/\s+/g, "-");
+
 const handleSubmit = () => {
+  const categoryTags = form.categoryPath.map(normalizeTag);
+  const userTags = form.tags.map(normalizeTag);
+  const allTags = [...new Set([...userTags, ...categoryTags])];
+
   const payload = {
     sku: form.sku,
     price: form.price,
     quantity: form.quantity,
-    tags: [...form.tags],
+    tags: allTags,
     categoryPath: [...form.categoryPath],
     image: form.image?.name || null,
   };
 
   console.log("Submitted immediately:", payload);
-
 };
 </script>
 

@@ -102,6 +102,11 @@ const appendSelection = (value) => {
 
 const promptAddCategory = (level) => {
   const name = prompt(`Enter name for level ${level + 1}`);
+  const existsInPath = selectionPath.value.includes(name.trim());
+  if (existsInPath) {
+    alert("A category with that name already exists in the current path.");
+    return;
+  }
   if (!name || !name.trim()) return;
 
   let current = props.categories;
