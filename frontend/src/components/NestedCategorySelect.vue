@@ -49,6 +49,8 @@
 <script setup>
 import { ref, watch } from "vue";
 
+import { watchEffect } from "vue";
+
 const props = defineProps({
   categories: {
     type: Array,
@@ -76,6 +78,7 @@ const handleSelectionChange = (level) => {
   if (value === "__add__") {
     promptAddCategory(level);
   } else {
+    selectionPath.value.splice(level, 1, value);
     selectionPath.value.splice(level + 1);
     newLevelSelection.value = "";
   }
@@ -92,7 +95,7 @@ const handleNextLevelSelection = () => {
 
 const appendSelection = (value) => {
   if (value) {
-    selectionPath.value.push(value);
+    selectionPath.value.splice(selectionPath.value.length, 1, value);
     newLevelSelection.value = "";
   }
 };
@@ -116,8 +119,8 @@ const promptAddCategory = (level) => {
   newLevelSelection.value = "";
 };
 
-watch(selectionPath, () => {
-  console.log("Updated path:", [...selectionPath.value]);
+watchEffect(() => {
+  //console.log("🔼 watchEffect triggered:", [...selectionPath.value]);
   emit("update", [...selectionPath.value]);
 });
 </script>

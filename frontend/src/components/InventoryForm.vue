@@ -1,5 +1,8 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="space-y-6 p-6 bg-zinc-900 rounded-xl shadow-lg text-white">
+  <form
+    @submit.prevent="handleSubmit"
+    class="space-y-6 p-6 bg-zinc-900 rounded-xl shadow-lg text-white"
+  >
     <!-- Category Path Picker -->
     <div>
       <label class="block text-sm font-semibold mb-2">Category Path</label>
@@ -24,7 +27,9 @@
     <!-- Price -->
     <div>
       <label for="price" class="block text-sm font-medium mb-1">Price</label>
-      <div class="flex items-center bg-zinc-800 border border-zinc-700 rounded-md overflow-hidden">
+      <div
+        class="flex items-center bg-zinc-800 border border-zinc-700 rounded-md overflow-hidden"
+      >
         <span class="px-3 text-zinc-400">$</span>
         <input
           id="price"
@@ -40,7 +45,9 @@
 
     <!-- Image Upload -->
     <div>
-      <label for="image" class="block text-sm font-medium mb-1">Product Image</label>
+      <label for="image" class="block text-sm font-medium mb-1"
+        >Product Image</label
+      >
       <input
         id="image"
         type="file"
@@ -66,7 +73,9 @@
 
     <!-- Quantity -->
     <div>
-      <label for="quantity" class="block text-sm font-medium mb-1">Quantity</label>
+      <label for="quantity" class="block text-sm font-medium mb-1"
+        >Quantity</label
+      >
       <input
         id="quantity"
         v-model.number="form.quantity"
@@ -88,64 +97,61 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-import Multiselect from 'vue-multiselect'
-import NestedCategorySelect from './NestedCategorySelect.vue'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
+import { ref, reactive } from "vue";
+import Multiselect from "vue-multiselect";
+import NestedCategorySelect from "./NestedCategorySelect.vue";
+import "vue-multiselect/dist/vue-multiselect.min.css";
 
 const categoryTree = ref([
   {
-    name: 'Acrylic',
+    name: "Acrylic",
     children: [
       {
-        name: 'Charm',
+        name: "Charm",
         children: [
           {
-            name: 'One Piece',
-            children: [
-              { name: 'Straw Hat Crew', children: [] }
-            ]
-          }
-        ]
-      }
-    ]
+            name: "One Piece",
+            children: [{ name: "Straw Hat Crew", children: [] }],
+          },
+        ],
+      },
+    ],
   },
   {
-    name: 'Sticker',
-    children: [
-      { name: 'Flat', children: [] }
-    ]
-  }
-])
+    name: "Sticker",
+    children: [{ name: "Flat", children: [] }],
+  },
+]);
 
-const availableTags = ref(['online', 'cash', 'etsy', 'restock'])
+const availableTags = ref(["online", "cash", "etsy", "restock"]);
 
 const form = reactive({
   categoryPath: [],
-  sku: '',
+  sku: "",
   price: 0,
   image: null,
   tags: [],
-  quantity: 0
-})
+  quantity: 0,
+});
 
 const updateCategoryPath = (path) => {
-  form.categoryPath = path
-}
+  //console.log("⬇️ Received in parent:", path);
+  form.categoryPath.splice(0, form.categoryPath.length, ...path);
+};
 
 const handleImageUpload = (e) => {
-  form.image = e.target.files[0]
-}
+  form.image = e.target.files[0];
+};
 
 const addTag = (newTag) => {
-  const trimmed = newTag.trim()
+  const trimmed = newTag.trim();
   if (trimmed && !availableTags.value.includes(trimmed)) {
-    availableTags.value.push(trimmed)
+    availableTags.value.push(trimmed);
   }
   if (!form.tags.includes(trimmed)) {
-    form.tags.push(trimmed)
+    form.tags.push(trimmed);
   }
-}
+};
 
 const handleSubmit = () => {
   const payload = {
@@ -154,13 +160,12 @@ const handleSubmit = () => {
     quantity: form.quantity,
     tags: [...form.tags],
     categoryPath: [...form.categoryPath],
-    image: form.image?.name || null
-  }
+    image: form.image?.name || null,
+  };
 
-  console.log('Submitted:', payload)
-  // axios.post('/api/inventory', payload) or prepare FormData if using image
-}
+  console.log("Submitted immediately:", payload);
 
+};
 </script>
 
 <style scoped>
