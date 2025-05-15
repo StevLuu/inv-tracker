@@ -36,3 +36,4 @@ const toggleTheme = () => {
 onMounted(() => {
   document.documentElement.setAttribute("data-bs-theme", currentTheme.value);
 });
+</script>
